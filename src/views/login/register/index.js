@@ -40,6 +40,7 @@ export function Register({ login, setlogin }) {
       loginUser(email, password);        
     } catch (err) {
       setlogin(!login)
+      alert('Cadastro realizado com sucesso!');
     }
   }
 

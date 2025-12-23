@@ -8,26 +8,40 @@ export function LoggedProvider({ children }) {
       name: "Paulo",
       email: "paulo@email.com",
       password: "123456",
+      birth: "1999-02-10",
+      gender: "Masculino",
+      weight: 80,
+      height: 1.78,
       logged: false,
     },
     {
       name: "Maria",
       email: "maria@email.com",
       password: "abcdef",
+      birth: "2001-10-25",
+      gender: "Feminino",
+      weight: 60,
+      height: 1.65,
       logged: false,
     },
   ]);
 
-  function registerUser(name, email, password) {
+  function registerUser(name, email, password, birth, gender, weight, height) {
     const exists = users.find((u) => u.email === email);
+    if (exists) throw new Error("Email já cadastrado");
 
-    if (exists) {
-      throw new Error("Email já cadastrado");
-    }
+    const newUser = {
+      name,
+      email,
+      password,
+      birth,
+      gender,
+      weight,
+      height,
+      logged: false,
+    };
 
-    const newUser = { name, email, password, logged: false };
     setUsers((prev) => [...prev, newUser]);
-
     return newUser;
   }
 
@@ -35,10 +49,7 @@ export function LoggedProvider({ children }) {
     const exists = users.find(
       (u) => u.email === email && u.password === password
     );
-
-    if (!exists) {
-      throw new Error("Email ou senha inválidos");
-    }
+    if (!exists) throw new Error("Email ou senha inválidos");
 
     const updated = users.map((u) =>
       u.email === email ? { ...u, logged: true } : { ...u, logged: false }
@@ -49,12 +60,17 @@ export function LoggedProvider({ children }) {
   }
 
   function logoutUser() {
-    const updated = users.map((u) => ({ ...u, logged: false }));
-    setUsers(updated);
+    setUsers((prev) => prev.map((u) => ({ ...u, logged: false })));
   }
 
   function getLoggedUser() {
     return users.find((u) => u.logged === true) || null;
+  }
+
+  function updateLoggedUser(updatedData) {
+    setUsers((prev) =>
+      prev.map((u) => (u.logged ? { ...u, ...updatedData } : u))
+    );
   }
 
   return (
@@ -65,6 +81,7 @@ export function LoggedProvider({ children }) {
         loginUser,
         logoutUser,
         getLoggedUser,
+        updateLoggedUser,
       }}
     >
       {children}

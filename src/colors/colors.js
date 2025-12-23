@@ -1,11 +1,15 @@
 export const colors = {
-  background: '#212121ff',          
+  background: '#212121ff', 
+  backgroundWhite: '#e4e4e4ff',    
   cardBackground: '#181818ff',
+  cardBackgroundWhite: '#ffffffff',
   inputBackground: '#2e2e2eff',
+  inputBackgroundWhite: '#f0f0f0ff',
   inputBorder: '#444444',
   placeholder: '#777777',
 
-  text: '#FFFFFF',                
+  text: '#FFFFFF', 
+  textBlack: '#000000',               
   textSecondary: '#AAAAAA',       
   textDisabled: '#555555',
   link: '#4FC3F7',                
